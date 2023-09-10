@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:layout_margin="10dp"
+    android:elevation="5dp"
+    android:padding="10dp"
+    android:background="@drawable/background_radius_15dp"
+    android:id="@+id/layout"
+    tools:context=".view.fragment.category.CategoryAdapter">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple5843BE"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:elevation="2dp"
+        android:fontFamily="@font/poppins_medium"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+        tools:text="Apple"/>
+</RelativeLayout>

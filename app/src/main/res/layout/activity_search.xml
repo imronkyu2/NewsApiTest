@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.submenu.search.SearchActivity">
+
+    <include
+        android:id="@+id/layoutToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        layout="@layout/include_toolbar_layout"/>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search"
+        android:layout_below="@+id/layoutToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/background_radius_15dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search"
+        android:layoutAnimation="@anim/layout_animation_item_up_to_down"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/imageFailed"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:src="@drawable/ic_no_data"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+</RelativeLayout>

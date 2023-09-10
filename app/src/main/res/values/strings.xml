@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">News Api Test</string>
+    <string name="catagory">Catagory</string>
+    <string name="back">back</string>
+    <string name="Article">Article</string>
+    <string name="WebView">News Web View</string>
+    <string name="News">News</string>
+    <string name="Search">Search</string>
+    <string name="WishList">Wish List</string>
+</resources>

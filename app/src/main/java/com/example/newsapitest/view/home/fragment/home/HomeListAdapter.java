@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.fragment.home;
+package com.example.newsapitest.view.home.fragment.home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.newsapitest.R;
 import com.example.newsapitest.databinding.AdapterArticleBinding;
 import com.example.newsapitest.model.articel.Article;
-import com.example.newsapitest.view.submenu.article.ArticleAdapterViewContract;
+import com.example.newsapitest.view.article.ArticleAdapterViewContract;
 
 import java.util.ArrayList;
 

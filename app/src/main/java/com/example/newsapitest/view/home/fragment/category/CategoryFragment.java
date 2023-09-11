@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.fragment.category;
+package com.example.newsapitest.view.home.fragment.category;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.newsapitest.R;
 import com.example.newsapitest.databinding.FragmentCategoryBinding;
 import com.example.newsapitest.model.category.CategoryItem;
-import com.example.newsapitest.view.submenu.source.SourcesActivity;
+import com.example.newsapitest.view.source.SourcesActivity;
 
 import java.util.ArrayList;
 import java.util.List;

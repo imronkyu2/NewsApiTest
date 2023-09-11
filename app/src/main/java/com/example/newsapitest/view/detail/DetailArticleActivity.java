@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.detail;
+package com.example.newsapitest.view.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.newsapitest.R;
 import com.example.newsapitest.databinding.ActivityDetailArticleBinding;
 import com.example.newsapitest.model.articel.Article;
-import com.example.newsapitest.view.submenu.web.WebViewActivity;
+import com.example.newsapitest.view.web.WebViewActivity;
 import com.example.newsapitest.viewmodel.LocalArticleViewModel;
 
 public class DetailArticleActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.fragment.wishlist;
+package com.example.newsapitest.view.home.fragment.wishlist;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

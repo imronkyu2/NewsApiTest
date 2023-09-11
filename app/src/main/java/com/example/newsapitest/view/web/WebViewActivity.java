@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.web;
+package com.example.newsapitest.view.web;
 
 import android.os.Bundle;
 import android.webkit.WebSettings;

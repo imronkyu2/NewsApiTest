@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.fragment.home;
+package com.example.newsapitest.view.home.fragment.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,9 +16,9 @@ import com.example.newsapitest.R;
 import com.example.newsapitest.databinding.FragmentHomeBinding;
 import com.example.newsapitest.model.articel.Article;
 import com.example.newsapitest.utils.AppConstant;
-import com.example.newsapitest.view.submenu.article.ArticleAdapterViewContract;
-import com.example.newsapitest.view.submenu.detail.DetailArticleActivity;
-import com.example.newsapitest.view.submenu.search.SearchActivity;
+import com.example.newsapitest.view.article.ArticleAdapterViewContract;
+import com.example.newsapitest.view.detail.DetailArticleActivity;
+import com.example.newsapitest.view.search.SearchActivity;
 import com.example.newsapitest.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;

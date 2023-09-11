@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.adapter;
+package com.example.newsapitest.view.home.adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;

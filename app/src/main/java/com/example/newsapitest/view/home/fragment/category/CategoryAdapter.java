@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.fragment.category;
+package com.example.newsapitest.view.home.fragment.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;

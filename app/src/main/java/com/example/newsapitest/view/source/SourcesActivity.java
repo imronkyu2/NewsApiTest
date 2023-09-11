@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.article;
+package com.example.newsapitest.view.source;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -10,35 +10,34 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.newsapitest.R;
-import com.example.newsapitest.databinding.ActivityArticleBinding;
-import com.example.newsapitest.model.articel.Article;
+import com.example.newsapitest.databinding.ActivitySourcesBinding;
+import com.example.newsapitest.model.source.SourcesItem;
 import com.example.newsapitest.utils.AppConstant;
-import com.example.newsapitest.view.submenu.detail.DetailArticleActivity;
+import com.example.newsapitest.view.article.ArticleActivity;
 import com.example.newsapitest.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ArticleActivity extends AppCompatActivity implements ArticleAdapterViewContract {
-    private ActivityArticleBinding binding;
-    private ArticleAdapter adapter;
-    private final ArrayList<Article> articleArrayList = new ArrayList<>();
-    private ArticleViewModel articleViewModel;
+public class SourcesActivity extends AppCompatActivity implements SourcesAdapterViewContract {
+    private ActivitySourcesBinding binding;
+    private SourcesAdapter adapter;
+    private final ArrayList<SourcesItem> sourcesItems = new ArrayList<>();
+    private ArticleViewModel viewModel;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityArticleBinding.inflate(getLayoutInflater());
+        binding = ActivitySourcesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String id = getIntent().getStringExtra("ID");
-        String category = getIntent().getStringExtra("Category");
-
+        category = getIntent().getStringExtra("Category");
         initialization();
-        if (id != null & category != null) {
+        if (category != null) {
             binding.layoutToolbar.source.setText(category);
-            getArticles(id, category);
+            getMovieArticles(category);
         }
     }
 
@@ -49,20 +48,20 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAdapter
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setHasFixedSize(true);
 
-        adapter = new ArticleAdapter(getApplicationContext(), articleArrayList, this);
+        adapter = new SourcesAdapter(sourcesItems, this);
         binding.recyclerView.setAdapter(adapter);
 
-        articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void getArticles(String id, String category) {
-        articleViewModel.getArticlesByResource(id, category).observe(this, articleResponse -> {
-            if (articleResponse != null) {
+    private void getMovieArticles(String category) {
+        viewModel.getSourceResponseLiveData(category).observe(this, sourceResponse -> {
+            if (sourceResponse != null) {
                 binding.progressBar.setVisibility(View.GONE);
-                List<Article> articles = articleResponse.getArticles();
+                List<SourcesItem> articles = sourceResponse.getSources();
                 if (articles.size() > 0) {
-                    articleArrayList.addAll(articles);
+                    sourcesItems.addAll(articles);
                     adapter.notifyDataSetChanged();
                     binding.recyclerView.scheduleLayoutAnimation();
                 } else {
@@ -86,9 +85,10 @@ public class ArticleActivity extends AppCompatActivity implements ArticleAdapter
     }
 
     @Override
-    public void doGetDetailView(Article article) {
-        Intent intent = new Intent(this, DetailArticleActivity.class);
-        intent.putExtra("Article", article);
+    public void doGetArticel(String id) {
+        Intent intent = new Intent(this, ArticleActivity.class);
+        intent.putExtra("ID", id);
+        intent.putExtra("Category", category);
         startActivity(intent);
     }
 }

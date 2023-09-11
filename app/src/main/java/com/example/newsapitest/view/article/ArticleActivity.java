@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.search;
+package com.example.newsapitest.view.article;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,74 +6,63 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.newsapitest.R;
-import com.example.newsapitest.databinding.ActivitySearchBinding;
+import com.example.newsapitest.databinding.ActivityArticleBinding;
 import com.example.newsapitest.model.articel.Article;
 import com.example.newsapitest.utils.AppConstant;
-import com.example.newsapitest.view.fragment.home.HomeListAdapter;
-import com.example.newsapitest.view.submenu.article.ArticleAdapterViewContract;
-import com.example.newsapitest.view.submenu.detail.DetailArticleActivity;
+import com.example.newsapitest.view.detail.DetailArticleActivity;
 import com.example.newsapitest.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SearchActivity extends AppCompatActivity implements ArticleAdapterViewContract {
-    private ActivitySearchBinding binding;
-    private HomeListAdapter adapter;
+public class ArticleActivity extends AppCompatActivity implements ArticleAdapterViewContract {
+    private ActivityArticleBinding binding;
+    private ArticleAdapter adapter;
+    private final ArrayList<Article> articleArrayList = new ArrayList<>();
     private ArticleViewModel articleViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySearchBinding.inflate(getLayoutInflater());
+        binding = ActivityArticleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        String id = getIntent().getStringExtra("ID");
+        String category = getIntent().getStringExtra("Category");
+
         initialization();
+        if (id != null & category != null) {
+            binding.layoutToolbar.source.setText(category);
+            getArticles(id, category);
+        }
     }
 
     private void initialization() {
         binding.layoutToolbar.imageButton.setOnClickListener(view -> onBackPressed());
-        binding.layoutToolbar.source.setText(getString(R.string.Search));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setHasFixedSize(true);
 
+        adapter = new ArticleAdapter(getApplicationContext(), articleArrayList, this);
+        binding.recyclerView.setAdapter(adapter);
+
         articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
-
-        binding.search.setOnClickListener(v -> binding.search.setIconified(false));
-
-        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                binding.progressBar.setVisibility(View.VISIBLE);
-                getSearch(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void getSearch(String query) {
-        articleViewModel.getSearchArticleResponseLiveData(query).observe(this, articleResponse -> {
+    private void getArticles(String id, String category) {
+        articleViewModel.getArticlesByResource(id, category).observe(this, articleResponse -> {
             if (articleResponse != null) {
                 binding.progressBar.setVisibility(View.GONE);
                 List<Article> articles = articleResponse.getArticles();
                 if (articles.size() > 0) {
-                    adapter = new HomeListAdapter(getApplicationContext(), (ArrayList<Article>) articles, this);
-                    binding.recyclerView.setAdapter(adapter);
+                    articleArrayList.addAll(articles);
                     adapter.notifyDataSetChanged();
                     binding.recyclerView.scheduleLayoutAnimation();
                 } else {
@@ -95,7 +84,6 @@ public class SearchActivity extends AppCompatActivity implements ArticleAdapterV
         binding.recyclerView.setVisibility(View.GONE);
         binding.imageFailed.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     public void doGetDetailView(Article article) {

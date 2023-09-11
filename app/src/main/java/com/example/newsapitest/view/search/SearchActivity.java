@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.source;
+package com.example.newsapitest.view.search;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,62 +6,74 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.newsapitest.R;
-import com.example.newsapitest.databinding.ActivitySourcesBinding;
-import com.example.newsapitest.model.source.SourcesItem;
+import com.example.newsapitest.databinding.ActivitySearchBinding;
+import com.example.newsapitest.model.articel.Article;
 import com.example.newsapitest.utils.AppConstant;
-import com.example.newsapitest.view.submenu.article.ArticleActivity;
+import com.example.newsapitest.view.article.ArticleAdapterViewContract;
+import com.example.newsapitest.view.detail.DetailArticleActivity;
+import com.example.newsapitest.view.home.fragment.home.HomeListAdapter;
 import com.example.newsapitest.viewmodel.ArticleViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SourcesActivity extends AppCompatActivity implements SourcesAdapterViewContract {
-    private ActivitySourcesBinding binding;
-    private SourcesAdapter adapter;
-    private final ArrayList<SourcesItem> sourcesItems = new ArrayList<>();
-    private ArticleViewModel viewModel;
-    private String category;
+public class SearchActivity extends AppCompatActivity implements ArticleAdapterViewContract {
+    private ActivitySearchBinding binding;
+    private HomeListAdapter adapter;
+    private ArticleViewModel articleViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySourcesBinding.inflate(getLayoutInflater());
+        binding = ActivitySearchBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        category = getIntent().getStringExtra("Category");
         initialization();
-        if (category != null) {
-            binding.layoutToolbar.source.setText(category);
-            getMovieArticles(category);
-        }
     }
 
     private void initialization() {
         binding.layoutToolbar.imageButton.setOnClickListener(view -> onBackPressed());
+        binding.layoutToolbar.source.setText(getString(R.string.Search));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.setHasFixedSize(true);
 
-        adapter = new SourcesAdapter(sourcesItems, this);
-        binding.recyclerView.setAdapter(adapter);
+        articleViewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
 
-        viewModel = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        binding.search.setOnClickListener(v -> binding.search.setIconified(false));
+
+        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                getSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void getMovieArticles(String category) {
-        viewModel.getSourceResponseLiveData(category).observe(this, sourceResponse -> {
-            if (sourceResponse != null) {
+    private void getSearch(String query) {
+        articleViewModel.getSearchArticleResponseLiveData(query).observe(this, articleResponse -> {
+            if (articleResponse != null) {
                 binding.progressBar.setVisibility(View.GONE);
-                List<SourcesItem> articles = sourceResponse.getSources();
+                List<Article> articles = articleResponse.getArticles();
                 if (articles.size() > 0) {
-                    sourcesItems.addAll(articles);
+                    adapter = new HomeListAdapter(getApplicationContext(), (ArrayList<Article>) articles, this);
+                    binding.recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     binding.recyclerView.scheduleLayoutAnimation();
                 } else {
@@ -84,11 +96,11 @@ public class SourcesActivity extends AppCompatActivity implements SourcesAdapter
         binding.imageFailed.setVisibility(View.VISIBLE);
     }
 
+
     @Override
-    public void doGetArticel(String id) {
-        Intent intent = new Intent(this, ArticleActivity.class);
-        intent.putExtra("ID", id);
-        intent.putExtra("Category", category);
+    public void doGetDetailView(Article article) {
+        Intent intent = new Intent(this, DetailArticleActivity.class);
+        intent.putExtra("Article", article);
         startActivity(intent);
     }
 }

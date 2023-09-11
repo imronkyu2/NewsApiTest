@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.article;
+package com.example.newsapitest.view.article;
 
 import com.example.newsapitest.model.articel.Article;
 

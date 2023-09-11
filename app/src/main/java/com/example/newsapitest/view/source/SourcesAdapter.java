@@ -1,4 +1,4 @@
-package com.example.newsapitest.view.submenu.source;
+package com.example.newsapitest.view.source;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

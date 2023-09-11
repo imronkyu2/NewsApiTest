@@ -8,7 +8,7 @@
     android:padding="10dp"
     android:background="@drawable/background_radius_15dp"
     android:id="@+id/layout"
-    tools:context=".view.fragment.category.CategoryAdapter">
+    tools:context=".view.home.fragment.category.CategoryAdapter">
 
     <ImageView
         android:id="@+id/image"

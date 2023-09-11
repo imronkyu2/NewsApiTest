@@ -1,4 +1,4 @@
-package com.example.newsapitest.view;
+package com.example.newsapitest.view.home;
 
 import android.os.Bundle;
 
@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.newsapitest.R;
 import com.example.newsapitest.databinding.ActivityMainBinding;
-import com.example.newsapitest.view.adapter.ViewPagerAdapter;
-import com.example.newsapitest.view.fragment.category.CategoryFragment;
-import com.example.newsapitest.view.fragment.home.HomeFragment;
-import com.example.newsapitest.view.fragment.wishlist.WishlistFragment;
+import com.example.newsapitest.view.home.adapter.ViewPagerAdapter;
+import com.example.newsapitest.view.home.fragment.category.CategoryFragment;
+import com.example.newsapitest.view.home.fragment.home.HomeFragment;
+import com.example.newsapitest.view.home.fragment.wishlist.WishlistFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.submenu.article.ArticleActivity">
+    tools:context=".view.article.ArticleActivity">
 
     <include
         android:id="@+id/layoutToolbar"
